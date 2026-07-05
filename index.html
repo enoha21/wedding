@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>礒野 幸博 ・ 千里 — 結婚式のご案内</title>
 <meta name="description" content="礒野幸博・千里 結婚式のご案内">
+<meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
@@ -905,7 +906,7 @@
       </div>
       <div class="field">
         <label for="companions">同伴者人数</label>
-        <input type="number" id="companions" name="companions" min="0" value="0">
+        <input type="number" id="companions" name="companions" min="0" max="10" step="1" value="0">
       </div>
       <div class="field" id="companion-names-field" hidden>
         <label for="companion-names">同伴者のお名前（任意）</label>
@@ -923,7 +924,7 @@
         <textarea id="message" name="message"></textarea>
       </div>
       <button type="submit" class="submit-btn" id="submit-btn">送信する</button>
-      <p class="rsvp-error" id="rsvp-error">送信に失敗しました。お手数ですが、時間をおいて再度お試しください。</p>
+      <p class="rsvp-error" id="rsvp-error">送信に失敗しました。お手数ですが、時間をおいて再度お試しください。<br>何度も失敗する場合は、恐れ入りますが幸博・千里まで直接ご連絡ください。</p>
     </form>
 
     <div class="rsvp-thanks" id="rsvp-thanks" style="display:none;">
@@ -1024,15 +1025,29 @@
   })();
 
   // ---- RSVP送信 ----
-  // GASのWebアプリURL（デプロイ後に差し替えてください）
+  // GASのWebアプリURL
   const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzjzxPmPfYZfT0U_kGr5sYCaV2WIYxsfp9TqXM6mHjaR34Q9oAIUrJh0A7_U4WwHzKn/exec";
 
+  // 送信後にレスポンスの内容まで検証する。
+  // 「成功表示なのに実は保存されていない」事故を防ぐため、
+  // {"result":"success"} が返らない限り成功扱いにしない。
   async function submitRSVP(payload) {
-    await fetch(GAS_WEB_APP_URL, {
-      method: "POST",
-      body: JSON.stringify(payload),
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
-    });
+    var controller = new AbortController();
+    var timer = setTimeout(function(){ controller.abort(); }, 25000);
+    try {
+      var res = await fetch(GAS_WEB_APP_URL, {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        signal: controller.signal
+      });
+      var json = await res.json();
+      if (!json || json.result !== "success") {
+        throw new Error("server returned: " + JSON.stringify(json));
+      }
+    } finally {
+      clearTimeout(timer);
+    }
   }
 
   // ---- 同伴者人数が1人以上のときのみ、同伴者氏名欄を表示 ----
