@@ -8,6 +8,7 @@ function doPost(e) {
     data.address,
     data.attendance,
     data.companions,
+    data.companionNames,
     data.allergy,
     data.message
   ]);
