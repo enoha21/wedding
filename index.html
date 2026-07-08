@@ -481,27 +481,24 @@
   .map-link-btn{
     display:inline-flex;
     align-items:center;
+    justify-content:center;
     gap:8px;
-    margin:4px 0 28px;
-    padding:12px 22px;
+    width:100%;
+    margin:4px 0 4px;
+    padding:15px 22px;
+    background:var(--green-deep);
     border:1.5px solid var(--green-deep);
     border-radius:999px;
-    color:var(--green-deep);
-    font-size:14px;
+    color:var(--paper);
+    font-size:15px;
+    font-weight:700;
     letter-spacing:0.05em;
     text-decoration:none;
-    transition:background .2s ease, color .2s ease;
+    box-shadow:0 8px 20px rgba(31,64,56,0.25);
+    transition:opacity .2s ease, transform .2s ease;
   }
-  .map-link-btn:hover{ background:var(--green-deep); color:var(--paper); }
-  .map-link-btn svg{ width:16px; height:16px; flex:0 0 auto; }
-  .map-frame{
-    width:100%;
-    border:0;
-    height:280px;
-    margin-top:8px;
-    filter:saturate(0.85);
-    border-radius:10px;
-  }
+  .map-link-btn:hover{ opacity:0.9; transform:translateY(-1px); }
+  .map-link-btn svg{ width:18px; height:18px; flex:0 0 auto; }
 
   /* ---------- RSVP ---------- */
   .rsvp-deadline{
@@ -869,13 +866,10 @@
         </dd>
       </div>
     </dl>
-    <a class="map-link-btn" href="https://www.google.com/maps/search/?api=1&query=%E3%83%91%E3%83%AB%E3%82%B95%20%E5%A4%A7%E5%88%86%E5%B8%82%E5%9F%8E%E5%B4%8E%E7%94%BA3-3-30" target="_blank" rel="noopener noreferrer">
+    <a class="map-link-btn" href="https://www.google.com/maps/search/?api=1&query=%E3%83%91%E3%83%AB%E3%82%B9%E3%83%95%E3%82%A1%E3%82%A4%E3%83%96%20-Pulse%205-%20%E5%A4%A7%E5%88%86%E7%9C%8C%E5%A4%A7%E5%88%86%E5%B8%82%E5%9F%8E%E5%B4%8E%E7%94%BA3%E4%B8%81%E7%9B%AE3-30" target="_blank" rel="noopener noreferrer">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-7.2 7-12a7 7 0 1 0-14 0c0 4.8 7 12 7 12z" stroke="currentColor" stroke-width="1.8" fill="none"/><circle cx="12" cy="9" r="2.4" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
-      マップで見る
+      マップで見る（Googleマップが開きます）
     </a>
-    <iframe class="map-frame" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-      src="https://www.google.com/maps?q=%E3%83%91%E3%83%AB%E3%82%B95%20%E5%A4%A7%E5%88%86%E5%B8%82%E5%9F%8E%E5%B4%8E%E7%94%BA3-3-30&output=embed"
-      title="会場地図"></iframe>
   </div>
 </section>
 
